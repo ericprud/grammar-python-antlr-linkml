@@ -44,11 +44,10 @@ dependencies = [
     "shexjsg>=0.8.1",
 ]
 
-[tool.uv]
-# pyjsg's antlr4-python3-runtime~=4.9.3 pin serves only its .jsg compiler
-# (pyjsg.jsglib, the runtime we use, never imports antlr) -- override until
-# pyjsg moves the compiler dependency to an extra
-override-dependencies = ["antlr4-python3-runtime~=4.13.2"]
+[tool.uv.sources]
+# pyjsg with antlr4-python3-runtime moved to a compiler extra (linkml/pyjsg#52);
+# repoint to PyPI once released
+pyjsg = { git = "https://github.com/ericprud/pyjsg.git", branch = "antlr-extra" }
 
 [tool.uv-dynamic-versioning]
 vcs = "git"

@@ -2,9 +2,6 @@ version = 1
 revision = 3
 requires-python = ">=3.10"
 
-[manifest]
-overrides = [{ name = "antlr4-python3-runtime", specifier = "~=4.13.2" }]
-
 [[package]]
 name = "antlr4-python3-runtime"
 version = "4.13.2"
@@ -366,16 +363,11 @@ wheels = [
 
 [[package]]
 name = "pyjsg"
-version = "0.12.3"
-source = { registry = "https://pypi.org/simple" }
+version = "0.12.4.post1.dev0+6599f60"
+source = { git = "https://github.com/ericprud/pyjsg.git?branch=antlr-extra#6599f60bb91b7d22e684e8937e92462531dbaccf" }
 dependencies = [
-    { name = "antlr4-python3-runtime" },
     { name = "jsonasobj" },
     { name = "requests" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/04/75/9b316ac78dfd1c4e31521091d7fa6da15a53ece81de76fe755078d43e3e0/pyjsg-0.12.3.tar.gz", hash = "sha256:09d147060e1450a91c25ad3f3632de3e1f066270e7ec96b202877673a7db8cd8", size = 137620, upload-time = "2026-03-13T17:46:59.192Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/5e/c2/b1d3527862c2df8fa33a4316f110250561f41ca44df26fe31f5d3bae1447/pyjsg-0.12.3-py3-none-any.whl", hash = "sha256:1ce57be11f4599baa5ab6d94f05709103fa7e24ac4fc47b8517d2ae4ea2a6d9d", size = 81731, upload-time = "2026-03-13T17:46:58.009Z" },
 ]
 
 [[package]]
@@ -412,7 +404,7 @@ requires-dist = [
     { name = "antlr4-python3-runtime", specifier = "~=4.13.2" },
     { name = "chardet", specifier = ">=7.4.1" },
     { name = "jsonasobj", specifier = ">=1.2.1" },
-    { name = "pyjsg", specifier = ">=0.11.10" },
+    { name = "pyjsg", git = "https://github.com/ericprud/pyjsg.git?branch=antlr-extra" },
     { name = "rdflib-shim", specifier = ">=1.0.3" },
     { name = "shexjsg", specifier = ">=0.8.1" },
 ]
