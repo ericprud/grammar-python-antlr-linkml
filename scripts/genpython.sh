@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Running:
 #    . ./genpython.sh
-# Note: need antlr4.8  to run this!
+# Note: need antlr 4.13.2 to run this (must match the antlr4-python3-runtime pin)!
 # see: http://www.antlr.org/download.html for details
 cp ../../grammar/ShExDoc.g4 .
 antlr4 -Dlanguage=Python3 -package parser -o ../pyshexc/parser -no-listener -visitor ShExDoc.g4
