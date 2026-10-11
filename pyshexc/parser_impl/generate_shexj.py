@@ -1,4 +1,3 @@
-import codecs
 import os
 import sys
 from argparse import ArgumentParser
@@ -34,10 +33,14 @@ class ParseErrorListener(ErrorListener):
 
 def load_shex_file(shexfilename: str) -> str:
     """
-    Read a ShEx input file, processing BOM encodings if necessary
+    Read a ShEx input file or URL as UTF-8 (honoring a BOM), guessing the encoding only if that fails.
+
+    ShExC is UTF-8 by definition, so chardet is a fallback for non-conforming files rather than
+    the first resort: it samples only the start of the data, and reports ascii with confidence 1.0
+    for a large file whose first non-ASCII character comes later (e.g. FHIR R4's fhir.shex).
 
     :param shexfilename: file or URL to open
-    :return:
+    :return: decoded text
     """
     if '://' in shexfilename:
         with request.urlopen(shexfilename) as response:
@@ -46,14 +49,15 @@ def load_shex_file(shexfilename: str) -> str:
         with open(shexfilename, 'rb') as inf:
             data = inf.read()
 
-    if data.startswith(codecs.BOM_UTF8):
-        encoding = 'utf-8-sig'
-    else:
-        result = chardet.detect(data)
-        # chardet can return {'encoding': None, ...}; never pass None to decode()
-        encoding = result['encoding'] if result['encoding'] is not None and float(result['confidence'] or 0) > 0.9 else 'UTF-8'
-
-    return data.decode(encoding)
+    try:
+        return data.decode('utf-8-sig')         # also strips a UTF-8 BOM if present
+    except UnicodeDecodeError:
+        pass
+    encoding = chardet.detect(data)['encoding']
+    try:
+        return data.decode(encoding or 'latin-1')
+    except (UnicodeDecodeError, LookupError):
+        return data.decode('latin-1')           # maps every byte, so never fails
 
 
 
