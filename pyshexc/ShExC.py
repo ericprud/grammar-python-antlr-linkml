@@ -221,6 +221,8 @@ class ShExC:
 
     @staticmethod
     def cardinality(min_: Integer | None, max_: Integer | None) -> str:
+        if min_ is None and max_ is None:
+            return ""
         minv = 1 if min_ is None else min_
         maxv = 1 if max_ is None else max_
         if minv == 0:
@@ -231,8 +233,6 @@ class ShExC:
         elif minv == 1:
             if maxv == -1:
                 return '+'
-            elif maxv == 1:
-                return ""
         return f"{{{minv}}}" if minv == maxv else f"{{{minv},{maxv}}}" if maxv != -1 else f"{{{minv},*}}"
 
     @staticmethod
